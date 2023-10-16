@@ -58,21 +58,27 @@ int ft_check_line(t_data *data)
     int i;
     int j;
 
+    j = 0;
+    while (data->map[0][j] == '1')
+        j++;
+    if (j != data->width - 1)
+        return (0);
+    j = 0;
+    while (data->map[data->high - 1][j] == '1')
+        j++;
+    if (j != data->width - 1)
+        return (0);
     i = 0;
-    while (data->map)
-    {
-        if (data->map[0])
-        {
-            j = 0;
-            while (data->map[0][j])
-            {
-                if (data->map[0][j] != 1)
-                    return (0);
-                printf("%d", data->map[0][j]);
-                j++;
-            }
-        }
+    while (data->map[i][0] == '1' && data->map[i][data->width - 2] == '1' && 
+            i < data->high - 1)
         i++;
-    }
+    if (i != data->high - 1)
+        return (0);    
     return (1);
 }
+
+int ft_check_elements(t_data *data)
+{
+    
+}
+

@@ -24,13 +24,33 @@ typedef struct s_data
     //Longitud de cadena
     int     high;   //alto
     int     width;  //ancho
+    int     tilesize;
 
-    //Medida de filas y columnas.
+    //Memoria de filas y columnas.
     char    **map;
+
+    //Ventana gráfica
+    mlx_t *mlx;
+
+    //Imagenes
+    mlx_texture_t *texture;
+    mlx_image_t *enemy;
+    mlx_image_t *enemy2;
+    mlx_image_t *box;
+    mlx_image_t *face;
+    mlx_image_t *face2;
+    mlx_image_t *doorclose;
+    mlx_image_t *dooropen;
+    mlx_image_t *floor;
+    mlx_image_t *item;
+    mlx_image_t *wall;
+       
 }t_data;
 
 int     ft_rectangle(t_data *data);
 void    ft_reserve_memory(t_data *data);
 int     ft_check_line(t_data *data);
+void    ft_image(t_data *data);
+void    ft_scan_map(t_data *data);
 
 #endif
