@@ -49,14 +49,18 @@ void    ft_scan_map(t_data *data)
                 j = 0;
                 while (j < data->width - 1)
                 {
-                        printf("%d", data->map[i][j]);
+                        //printf("%d", data->map[i][j]);
                         if (data->map[i][j] == '1')       
                                 mlx_image_to_window(data->mlx, data->wall, j * data->tilesize, i * data->tilesize);
                         else if (data->map[i][j] == '0')
                                 mlx_image_to_window(data->mlx, data->floor, j * data->tilesize, i * data->tilesize);
+                        else if (data->map[i][j] == 'P')
+                                mlx_image_to_window(data->mlx, data->face, j * data->tilesize, i * data->tilesize);
+                        else if (data->map[i][j] == 'C')
+                                mlx_image_to_window(data->mlx, data->item, j * data->tilesize, i * data->tilesize);
                         j++;
                 }
-                printf("\n");
+                //printf("\n");
                 i++;
         }
 }

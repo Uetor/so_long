@@ -52,5 +52,6 @@ void    ft_reserve_memory(t_data *data);
 int     ft_check_line(t_data *data);
 void    ft_image(t_data *data);
 void    ft_scan_map(t_data *data);
+//int     ft_check_elements(t_data *data);
 
 #endif

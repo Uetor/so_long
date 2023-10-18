@@ -77,8 +77,28 @@ int ft_check_line(t_data *data)
     return (1);
 }
 
-int ft_check_elements(t_data *data)
+/*int ft_check_elements(t_data *data)
 {
-    
-}
+   int  i;
+   int  j;
+   int  p;
 
+   i = 0;
+   while (i < data->high)
+   {
+        j = 0;
+        p = 0;
+        while (j < data->width)
+        {   
+            if(data->map[i][j] == 'P') //Tengo que averiguar como igualarlo bien.
+            {
+                p++;
+                if (p > 1)
+                    return (0);
+        
+            }        
+        }
+        i++;
+   }
+   return (1); 
+}*/
