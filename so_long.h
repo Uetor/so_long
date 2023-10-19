@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedrogon <pedrogon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/19 19:58:04 by pedrogon          #+#    #+#             */
+/*   Updated: 2023/10/19 19:58:49 by pedrogon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG
 # define SO_LONG
 # include "./libft/libft.h"
@@ -14,9 +26,8 @@
 
 typedef struct s_data
 {
-
     //Dirección del fichero
-    char    *dir;
+	char	*dir;
     char    *file;
     char    *line;
     int     fd;
@@ -52,6 +63,7 @@ void    ft_reserve_memory(t_data *data);
 int     ft_check_line(t_data *data);
 void    ft_image(t_data *data);
 void    ft_scan_map(t_data *data);
-//int     ft_check_elements(t_data *data);
+int     ft_check_player(t_data *data);
+int		ft_check_elements(t_data *data);
 
 #endif

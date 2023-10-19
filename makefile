@@ -1,7 +1,7 @@
 # Makefile
 
 NAME = 	so_long
-SRC  =  main.c  tester.c image.c \
+SRC  =  main.c  tester.c image.c moves.c\
 
 
 OBJS        = $(SRC:.c=.o)

@@ -58,6 +58,8 @@ void    ft_scan_map(t_data *data)
                                 mlx_image_to_window(data->mlx, data->face, j * data->tilesize, i * data->tilesize);
                         else if (data->map[i][j] == 'C')
                                 mlx_image_to_window(data->mlx, data->item, j * data->tilesize, i * data->tilesize);
+                        else if (data->map[i][j] == 'E')
+                                mlx_image_to_window(data->mlx, data->doorclose, j * data->tilesize, i * data->tilesize);        
                         j++;
                 }
                 //printf("\n");
