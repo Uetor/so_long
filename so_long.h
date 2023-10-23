@@ -6,7 +6,7 @@
 /*   By: pedrogon <pedrogon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:58:04 by pedrogon          #+#    #+#             */
-/*   Updated: 2023/10/19 19:58:49 by pedrogon         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:54:18 by pedrogon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ void    ft_reserve_memory(t_data *data);
 int     ft_check_line(t_data *data);
 void    ft_image(t_data *data);
 void    ft_scan_map(t_data *data);
+void	ft_scan_object(t_data *data);
 int     ft_check_player(t_data *data);
 int		ft_check_elements(t_data *data);
+
 
 #endif

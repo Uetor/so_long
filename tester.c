@@ -6,7 +6,7 @@
 /*   By: pedrogon <pedrogon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:42:39 by pedrogon          #+#    #+#             */
-/*   Updated: 2023/10/19 20:04:31 by pedrogon         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:22:03 by pedrogon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_rectangle(t_data *data)
 		data->high++;
 	}
 	close(data->fd);
+	printf("w: %d\n", data->width);
 	return (1);
 }
 
