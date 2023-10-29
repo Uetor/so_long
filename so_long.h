@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedrogon <pedrogon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:58:04 by pedrogon          #+#    #+#             */
-/*   Updated: 2023/10/20 18:54:18 by pedrogon         ###   ########.fr       */
+/*   Updated: 2023/10/29 05:02:34 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
+
 typedef struct s_data
 {
     //Dirección del fichero
@@ -33,7 +34,7 @@ typedef struct s_data
     int     fd;
 
     //Longitud de cadena
-    int     high;   //alto
+    int     height;   //alto
     int     width;  //ancho
     int     tilesize;
 
@@ -55,7 +56,18 @@ typedef struct s_data
     mlx_image_t *floor;
     mlx_image_t *item;
     mlx_image_t *wall;
-       
+
+    //Posición del jugador
+    int y;
+    int x;
+
+    //Posición de la puerta
+    int d;
+    int r;
+
+    // Cantidad de imágenes
+    int image;
+    int tmp;
 }t_data;
 
 int     ft_rectangle(t_data *data);
@@ -66,6 +78,10 @@ void    ft_scan_map(t_data *data);
 void	ft_scan_object(t_data *data);
 int     ft_check_player(t_data *data);
 int		ft_check_elements(t_data *data);
-
+void    ft_hook(mlx_key_data_t keydata, void* param);
+void    ft_flood_map(char **map, int height, int width, int y, int x);
+int     ft_check_exit(t_data *data);
+void    ft_catch_item(t_data *data);
+int     ft_check_ber(t_data *data);
 
 #endif

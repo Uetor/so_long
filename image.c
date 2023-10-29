@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedrogon <pedrogon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:11:43 by pedrogon          #+#    #+#             */
-/*   Updated: 2023/10/20 19:26:17 by pedrogon         ###   ########.fr       */
+/*   Updated: 2023/10/29 05:07:08 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_scan_map(t_data *data)
 	int	j;
 
 	i = 0;
-	while (i < data->high)
+	while (i < data->height)
 	{
 		j = 0;
 		while (j < data->width - 1)
@@ -78,7 +78,7 @@ void	ft_scan_object(t_data *data)
 
 	tmp = data->tilesize;
 	i = 0;
-	while (i < data->high)
+	while (i < data->height)
 	{
 		j = 0;
 		while (j < data->width - 1)
@@ -87,8 +87,36 @@ void	ft_scan_object(t_data *data)
 				mlx_image_to_window(data->mlx, data->face, j * tmp, i * tmp);
 			else if (data->map[i][j] == 'C')
 				mlx_image_to_window(data->mlx, data->item, j * tmp, i * tmp);
+			else if (data->map[i][j] == 'E')
+				mlx_image_to_window(data->mlx, data->doorclose, j * tmp, i * tmp);
 			j++;
 		}
 		i++;
 	}
 }
+
+void ft_catch_item(t_data *data)
+{
+	int	i;
+	
+	i = 0;
+	if (data->map[data->y][data->x] == 'C')
+	{
+		while ( i < data->image)
+		{ //tenemos un array con las imagenes de item.  Esto lo hacemos para comprobar que cuando el jugador este en la misma casilla que el item.
+			if (data->x * 64 == data->item->instances[i].x && data->y * 64 == data->item->instances[i].y)
+			{//con la característica enabled como esta puesta la imagen item desaparezca.
+				data->item->instances[i].enabled = false;
+				data->tmp--;
+			}
+			if (data->tmp == 0)
+			{
+				data->doorclose->instances[0].enabled = false;
+				mlx_image_to_window(data->mlx, data->dooropen, data->r * data->tilesize, \
+				data->d * data->tilesize);
+			}
+			i++;
+
+		}
+	}
+} 
