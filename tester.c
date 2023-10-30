@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:42:39 by pedrogon          #+#    #+#             */
-/*   Updated: 2023/10/29 05:03:33 by pedro            ###   ########.fr       */
+/*   Updated: 2023/10/30 06:06:48 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 //Esta función comprueba que el fichero que nos dan tiene forma de rectangulo.
 int	ft_rectangle(t_data *data)
 {
-	int	tmp;
-
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd == -1)
 		return (0);
@@ -25,17 +23,18 @@ int	ft_rectangle(t_data *data)
 	while (data->line)
 	{
 		data->line = get_next_line(data->fd);
-		tmp = 0;
+		data->tmp = 0;
 		if (data->line != 0)
 		{
-			while (data->line[tmp])
-				tmp++;
-			if (data->width != tmp)
+			while (data->line[data->tmp])
+				data->tmp++;
+			if (data->width != data->tmp)
 				return (0);
 		}
 		data->height++;
 	}
 	close(data->fd);
+	ft_reserve_memory(data);
 	return (1);
 }
 
@@ -48,7 +47,7 @@ void	ft_reserve_memory(t_data *data)
 	data->map = malloc(sizeof(char *) * data->height);
 	i = 0;
 	while (data->map[i])
-	{  //El -1 es para que nos nos cuente el salto de línea.  Está quitado para dejar un espacio más para el carácter nulo
+	{
 		data->map[i] = malloc(sizeof(char) * data->width);
 		i++;
 	}
@@ -81,8 +80,8 @@ int	ft_check_line(t_data *data)
 	if (j != data->width - 1)
 		return (0);
 	i = 0;
-	while (data->map[i][0] == '1' && data->map[i][data->width - 2] == '1' &&
-			i < data->height - 1)
+	while (data->map[i][0] == '1' && data->map[i][data->width - 2] == '1' 
+		&& i < data->height - 1)
 		i++;
 	if (i != data->height - 1)
 		return (0);
@@ -93,10 +92,9 @@ int	ft_check_player(t_data *data)
 {
 	int	i;
 	int	j;
-	int	p;
 
 	i = 0;
-	p = 0;
+	data->tmp = 0;
 	while (i < data->height)
 	{
 		j = 0;
@@ -104,17 +102,15 @@ int	ft_check_player(t_data *data)
 		{
 			if (data->map[i][j] == 'P')
 			{
-				p++;
-				if (p > 1)
-					write(2, "More 1 player", 14);
-				data->y = i;
+				data->tmp++;
+				data->y = i;	
 				data->x = j;
 			}
 			j++;
 		}
 		i++;
 	}
-	if (p == 0)
+	if (data->tmp == 0 || data->tmp > 1)
 		return (0);
 	return (1);
 }
@@ -136,7 +132,7 @@ int	ft_check_elements(t_data *data)
 			if (data->map[i][j] == 'C')
 			{
 				data->image++;
-				data->tmp++;
+				data->coin++;
 			}
 			if (data->map[i][j] == 'E')
 			{
@@ -148,7 +144,7 @@ int	ft_check_elements(t_data *data)
 		}
 		i++;
 	}
-	if (door < 1 || data->image < 1)
+	if (door != 1 || data->image < 1)
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:58:04 by pedrogon          #+#    #+#             */
-/*   Updated: 2023/10/29 05:02:34 by pedro            ###   ########.fr       */
+/*   Updated: 2023/10/30 05:49:48 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,37 @@ typedef struct s_data
 
     // Cantidad de imágenes
     int image;
+    int coin;
+
+    //Contador de pasos
+    int steps;
+
+    //Contadores
     int tmp;
 }t_data;
-
+//Las comprobaciones de errores
+int     ft_check_ber(t_data *data);
 int     ft_rectangle(t_data *data);
-void    ft_reserve_memory(t_data *data);
 int     ft_check_line(t_data *data);
-void    ft_image(t_data *data);
-void    ft_scan_map(t_data *data);
-void	ft_scan_object(t_data *data);
 int     ft_check_player(t_data *data);
 int		ft_check_elements(t_data *data);
-void    ft_hook(mlx_key_data_t keydata, void* param);
-void    ft_flood_map(char **map, int height, int width, int y, int x);
 int     ft_check_exit(t_data *data);
+int     ft_tester(t_data *data);
+//Reserva la memoria
+void    ft_reserve_memory(t_data *data);
+//Crea y pinta los objetos y el mapa
+void    ft_image(t_data *data);
+void    ft_paint_map(t_data *data);
+void	ft_paint_object(t_data *data);
+//Funciones para los movimientos del personaje
+void    ft_hook(mlx_key_data_t keydata, void* param);
+void    ft_move_w(mlx_key_data_t keydata, t_data *data);
+void    ft_move_s(mlx_key_data_t keydata, t_data *data);
+void    ft_move_a(mlx_key_data_t keydata, t_data *data);
+void    ft_move_d(mlx_key_data_t keydata, t_data *data);
+
+void    ft_flood_map(char **map, int height, int width, int y, int x);
 void    ft_catch_item(t_data *data);
-int     ft_check_ber(t_data *data);
+void	close_exit(t_data *data);
 
 #endif
