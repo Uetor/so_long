@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedrogon <pedrogon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:11:43 by pedrogon          #+#    #+#             */
-/*   Updated: 2023/10/30 05:45:56 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/16 17:09:51 by pedrogon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ void	ft_paint_object(t_data *data)
 
 	tmp = data->tilesize;
 	i = 0;
-	mlx_image_to_window(data->mlx, data->doorclose, data->r * tmp, data->d * tmp);
-	mlx_image_to_window(data->mlx, data->dooropen, data->r * tmp, data->d * tmp);
+	mlx_image_to_window(data->mlx, data->doorclose,
+		data->door_x * tmp, data->door_y * tmp);
+	mlx_image_to_window(data->mlx, data->dooropen,
+		data->door_x * tmp, data->door_y * tmp);
 	data->dooropen->instances[0].enabled = false;
 	while (i < data->height)
 	{
@@ -80,23 +82,23 @@ void	ft_paint_object(t_data *data)
 				mlx_image_to_window(data->mlx, data->face, j * tmp, i * tmp);
 			else if (data->map[i][j] == 'C')
 				mlx_image_to_window(data->mlx, data->item, j * tmp, i * tmp);
-			j++; 
+			j++;
 		}
 		i++;
 	}
 }
 
-void ft_catch_item(t_data *data)
+void	ft_catch_item(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
-	if (data->map[data->y][data->x] == 'C')
+	if (data->map[data->player_y][data->player_x] == 'C')
 	{
-		while ( i < data->image)
+		while (i < data->image)
 		{ //tenemos un array con las imagenes de item.  Esto lo hacemos para comprobar que cuando el jugador este en la misma casilla que el item.
-			if (data->x * 64 == data->item->instances[i].x 
-				&& data->y * 64 == data->item->instances[i].y)
+			if (data->player_x * 64 == data->item->instances[i].x
+				&& data->player_y * 64 == data->item->instances[i].y)
 			{//con la característica enabled como esta puesta la imagen item desaparezca.
 				data->item->instances[i].enabled = false;
 				data->coin--;
@@ -107,13 +109,19 @@ void ft_catch_item(t_data *data)
 				data->dooropen->instances[0].enabled = true;
 			}
 			i++;
-
 		}
 	}
-} 
+}
 
 void	close_exit(t_data *data)
 {
-	if (data->y == data->d && data->x == data->r && data->coin == 0)
+	if (data->player_y == data->door_y && data->player_x == data->door_x
+		&& data->coin == 0)
+	{
 		mlx_terminate(data->mlx);
+		ft_free_split(data->map, data->height - 1);
+		free(data->file);
+		free(data->dir);
+		exit(0);
+	}
 }

@@ -349,7 +349,7 @@ struct LodePNGCompressSettings /*deflate = compress*/ {
   /*LZ77 related settings*/
   unsigned btype; /*the block type for LZ (0, 1, 2 or 3, see zlib standard). Should be 2 for proper compression.*/
   unsigned use_lz77; /*whether or not to use LZ77. Should be 1 for proper compression.*/
-  unsigned windowsize; /*must be a power of two <= 32768. heighter compresses more but is slower. Default value: 2048.*/
+  unsigned windowsize; /*must be a power of two <= 32768. higher compresses more but is slower. Default value: 2048.*/
   unsigned minmatch; /*minimum lz77 length. 3 is normally best, 6 can be better for some PNGs. Default: 0*/
   unsigned nicematch; /*stop searching if >= this length found. Set to 258 for best compression. Default: 128*/
   unsigned lazymatching; /*use lazy matching: better compression but a bit slower. Default: true*/
@@ -745,7 +745,7 @@ typedef struct LodePNGDecoderSettings {
   unsigned remember_unknown_chunks;
 
   /* maximum size for decompressed text chunks. If a text chunk's text is larger than this, an error is returned,
-  unless reading text chunks is disabled or this limit is set heighter or disabled. Set to 0 to allow any size.
+  unless reading text chunks is disabled or this limit is set higher or disabled. Set to 0 to allow any size.
   By default it is a value that prevents unreasonably large strings from hogging memory. */
   size_t max_text_size;
 
@@ -1577,7 +1577,7 @@ Supported color conversions:
 -any gray or gray+alpha, to gray or gray+alpha
 -anything to a palette, as long as the palette has the requested colors in it
 -removing alpha channel
--heighter to smaller bitdepth, and vice versa
+-higher to smaller bitdepth, and vice versa
 
 If you want no color conversion to be done (e.g. for speed or control):
 -In the encoder, you can make it save a PNG with any color type by giving the
@@ -1759,7 +1759,7 @@ Make sure that LodePNG is compiled with the same compiler of the same version
 and with the same settings as the rest of the program, or the interfaces with
 std::vectors and std::strings in C++ can be incompatible.
 
-CHAR_BITS must be 8 or heighter, because LodePNG uses unsigned chars for octets.
+CHAR_BITS must be 8 or higher, because LodePNG uses unsigned chars for octets.
 
 *) gcc and g++
 

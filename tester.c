@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tester.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedrogon <pedrogon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:42:39 by pedrogon          #+#    #+#             */
-/*   Updated: 2023/10/30 06:06:48 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/16 20:09:10 by pedrogon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_rectangle(t_data *data)
 	data->height = 0;
 	while (data->line)
 	{
+		free(data->line);
 		data->line = get_next_line(data->fd);
 		data->tmp = 0;
 		if (data->line != 0)
@@ -35,6 +36,7 @@ int	ft_rectangle(t_data *data)
 	}
 	close(data->fd);
 	ft_reserve_memory(data);
+	puts("Check rectangulo");
 	return (1);
 }
 
@@ -44,21 +46,16 @@ void	ft_reserve_memory(t_data *data)
 	int		i;
 	char	*aux;
 
+	aux = NULL;
 	data->map = malloc(sizeof(char *) * data->height);
+	i = 0;
+	data->fd = open(data->file, O_RDONLY);
+	data->map[0] = get_next_line(data->fd);
 	i = 0;
 	while (data->map[i])
 	{
-		data->map[i] = malloc(sizeof(char) * data->width);
 		i++;
-	}
-	data->fd = open(data->file, O_RDONLY);
-	aux = get_next_line(data->fd);
-	i = 0;
-	while (aux)
-	{
-		data->map[i] = aux;
-		aux = get_next_line(data->fd);
-		i++;
+		data->map[i] = get_next_line(data->fd);
 	}
 	close(data->fd);
 }
@@ -85,6 +82,7 @@ int	ft_check_line(t_data *data)
 		i++;
 	if (i != data->height - 1)
 		return (0);
+	puts("Check line");
 	return (1);
 }
 //Comprueba que sólo exita un player en el juego.
@@ -103,8 +101,8 @@ int	ft_check_player(t_data *data)
 			if (data->map[i][j] == 'P')
 			{
 				data->tmp++;
-				data->y = i;	
-				data->x = j;
+				data->player_y = i;
+				data->player_x = j;
 			}
 			j++;
 		}
@@ -112,18 +110,17 @@ int	ft_check_player(t_data *data)
 	}
 	if (data->tmp == 0 || data->tmp > 1)
 		return (0);
+	puts("Check player");
 	return (1);
 }
-//Comprueba que haya al menos una salida y un item.
-int	ft_check_elements(t_data *data)
+//Comprueba que haya al menos un item.
+int	ft_check_coin(t_data *data)
 {
 	int	i;
 	int	j;
-	int	door;
 
 	i = 0;
 	data->image = 0;
-	door = 0;
 	while (i < data->height)
 	{
 		j = 0;
@@ -134,17 +131,11 @@ int	ft_check_elements(t_data *data)
 				data->image++;
 				data->coin++;
 			}
-			if (data->map[i][j] == 'E')
-			{
-				data->d = i;
-				data->r = j;
-				door++;
-			}
 			j++;
 		}
 		i++;
 	}
-	if (door != 1 || data->image < 1)
+	if (data->image < 1)
 		return (0);
 	return (1);
 }

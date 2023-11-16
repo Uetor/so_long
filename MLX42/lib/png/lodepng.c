@@ -690,7 +690,7 @@ static unsigned HuffmanTree_makeTable(HuffmanTree* tree) {
   tree->table_value = (unsigned short*)lodepng_malloc(size * sizeof(*tree->table_value));
   if(!tree->table_len || !tree->table_value) {
     lodepng_free(maxlens);
-    /* freeing tree->table values is done at a heighter scope */
+    /* freeing tree->table values is done at a higher scope */
     return 83; /*alloc fail*/
   }
   /*initialize with an invalid length to indicate unused entries*/
@@ -1708,7 +1708,7 @@ static unsigned encodeLZ77(uivector* out, Hash* hash,
     if(length >= 3 && offset > windowsize) ERROR_BREAK(86 /*too big (or overflown negative) offset*/);
 
     /*encode it as length/distance pair or literal value*/
-    if(length < 3) /*only lengths of 3 or heighter are supported as length/distance pair*/ {
+    if(length < 3) /*only lengths of 3 or higher are supported as length/distance pair*/ {
       if(!uivector_push_back(out, in[pos])) ERROR_BREAK(83 /*alloc fail*/);
     } else if(length < minmatch || (length == 3 && offset > 4096)) {
       /*compensate for the fact that longer offsets have more extra bits, a
@@ -3263,10 +3263,10 @@ static void getPixelColorRGBA8(unsigned char* r, unsigned char* g,
       if(mode->key_defined && 256U * in[i * 2 + 0] + in[i * 2 + 1] == mode->key_r) *a = 0;
       else *a = 255;
     } else {
-      unsigned heightest = ((1U << mode->bitdepth) - 1U); /*heightest possible value for this bit depth*/
+      unsigned highest = ((1U << mode->bitdepth) - 1U); /*highest possible value for this bit depth*/
       size_t j = i * mode->bitdepth;
       unsigned value = readBitsFromReversedStream(&j, in, mode->bitdepth);
-      *r = *g = *b = (value * 255) / heightest;
+      *r = *g = *b = (value * 255) / highest;
       if(mode->key_defined && value == mode->key_r) *a = 0;
       else *a = 255;
     }
@@ -3346,11 +3346,11 @@ static void getPixelColorsRGBA8(unsigned char* LODEPNG_RESTRICT buffer, size_t n
         buffer[3] = mode->key_defined && 256U * in[i * 2 + 0] + in[i * 2 + 1] == mode->key_r ? 0 : 255;
       }
     } else {
-      unsigned heightest = ((1U << mode->bitdepth) - 1U); /*heightest possible value for this bit depth*/
+      unsigned highest = ((1U << mode->bitdepth) - 1U); /*highest possible value for this bit depth*/
       size_t j = 0;
       for(i = 0; i != numpixels; ++i, buffer += num_channels) {
         unsigned value = readBitsFromReversedStream(&j, in, mode->bitdepth);
-        buffer[0] = buffer[1] = buffer[2] = (value * 255) / heightest;
+        buffer[0] = buffer[1] = buffer[2] = (value * 255) / highest;
         buffer[3] = mode->key_defined && value == mode->key_r ? 0 : 255;
       }
     }
@@ -3434,11 +3434,11 @@ static void getPixelColorsRGB8(unsigned char* LODEPNG_RESTRICT buffer, size_t nu
         buffer[0] = buffer[1] = buffer[2] = in[i * 2];
       }
     } else {
-      unsigned heightest = ((1U << mode->bitdepth) - 1U); /*heightest possible value for this bit depth*/
+      unsigned highest = ((1U << mode->bitdepth) - 1U); /*highest possible value for this bit depth*/
       size_t j = 0;
       for(i = 0; i != numpixels; ++i, buffer += num_channels) {
         unsigned value = readBitsFromReversedStream(&j, in, mode->bitdepth);
-        buffer[0] = buffer[1] = buffer[2] = (value * 255) / heightest;
+        buffer[0] = buffer[1] = buffer[2] = (value * 255) / highest;
       }
     }
   } else if(mode->colortype == LCT_RGB) {
@@ -4313,7 +4313,7 @@ static void removePaddingBits(unsigned char* out, const unsigned char* in,
   After filtering there are still padding bits if scanlines have non multiple of 8 bit amounts. They need
   to be removed (except at last scanline of (Adam7-reduced) image) before working with pure image buffers
   for the Adam7 code, the color convert code and the output to the user.
-  in and out are allowed to be the same buffer, in may also be heighter but still overlapping; in must
+  in and out are allowed to be the same buffer, in may also be higher but still overlapping; in must
   have >= ilinebits*h bits, out must have >= olinebits*h bits, olinebits must be <= ilinebits
   also used to move bits after earlier such operations happened, e.g. in a sequence of reduced images from Adam7
   only useful if (ilinebits - olinebits) is a value in the range 1..7
